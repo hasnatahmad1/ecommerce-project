@@ -32,9 +32,13 @@ export function HomePage({ cart }) {
 
     // Same as above but clean method but using axios package/Library laikin hum n yahan useEffect is wja s use kia ta k jb bhi hum HomePage load ya reload krain to dobara dobara request send na ho.
     useEffect(() => {
-        axios.get('/api/products')
+        axios.get('http://localhost:3000/api/products')
             .then((response) => {
+                console.log('Products loaded:', response.data);
                 setProducts(response.data);
+            })
+            .catch((error) => {
+                console.error('Error fetching products:', error);
             });
 
 
