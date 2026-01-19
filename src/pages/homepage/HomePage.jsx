@@ -1,10 +1,13 @@
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header'
-import { products } from '../../../starting-code/data/products';
 import './HomePage.css'
 
 
 export function HomePage() {
+    const [products, setProducts] = useState([]);
+
+
     /*
     fetch('http://localhost:3000/api/products')
         .then((response) => {
@@ -25,12 +28,13 @@ export function HomePage() {
     });
     */
 
-    //Same as above but clean method but using axios package/Library
-    axios.get('http://localhost:3000/api/products')
-        .then((response) => {
-            console.log(response.data);
-        });
-
+    // Same as above but clean method but using axios package/Library laikin hum n yahan useEffect is wja s use kia ta k jb bhi hum HomePage load ya reload krain to dobara dobara request send na ho.
+    useEffect(() => {
+        axios.get('http://localhost:3000/api/products')
+            .then((response) => {
+                setProducts(response.data);
+            });
+    }, []);
 
     return (
         <>
