@@ -31,12 +31,12 @@ export function HomePage() {
 
     // Same as above but clean method but using axios package/Library laikin hum n yahan useEffect is wja s use kia ta k jb bhi hum HomePage load ya reload krain to dobara dobara request send na ho.
     useEffect(() => {
-        axios.get('http://localhost:3000/api/products')
+        axios.get('/api/products')
             .then((response) => {
                 setProducts(response.data);
             });
 
-        axios.get('http://localhost:3000/api/cart-items')
+        axios.get('/api/cart-items')
             .then((response) => {
                 setCart(response.data);
             });
