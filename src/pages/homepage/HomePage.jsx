@@ -1,8 +1,8 @@
-import { formatMoney } from '../../utils/money';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Header } from '../../components/Header'
 import './HomePage.css'
+import { ProductsGrid } from './ProductsGrid';
 
 
 export function HomePage({ cart }) {
@@ -32,6 +32,7 @@ export function HomePage({ cart }) {
 
     // Same as above but clean method but using axios package/Library laikin hum n yahan useEffect is wja s use kia ta k jb bhi hum HomePage load ya reload krain to dobara dobara request send na ho.
     useEffect(() => {
+        /*
         axios.get('http://localhost:3000/api/products')
             .then((response) => {
                 console.log('Products loaded:', response.data);
@@ -40,8 +41,15 @@ export function HomePage({ cart }) {
             .catch((error) => {
                 console.error('Error fetching products:', error);
             });
+        */
 
+        //Using Async Await
+        const getHomeData = async () => {
+            const response = await axios.get('/api/products');
+            setProducts(response.data);
+        };
 
+        getHomeData();
     }, []);
 
     return (
@@ -53,60 +61,7 @@ export function HomePage({ cart }) {
             />
 
             <div className="home-page">
-                <div className="products-grid">
-                    {products.map((product) => {
-                        return (
-                            <div key={product.id} className="product-container">
-                                <div className="product-image-container">
-                                    <img className="product-image"
-                                        src={product.image} />
-                                </div>
-
-                                <div className="product-name limit-text-to-2-lines">
-                                    {product.name}
-                                </div>
-
-                                <div className="product-rating-container">
-                                    <img className="product-rating-stars"
-                                        src={`images/ratings/rating-${product.rating.stars * 10}.png`} />
-                                    <div className="product-rating-count link-primary">
-                                        {product.rating.count}
-                                    </div>
-                                </div>
-
-                                <div className="product-price">
-                                    {formatMoney(product.priceCents)}
-                                </div>
-
-                                <div className="product-quantity-container">
-                                    <select>
-                                        <option value="1">1</option>
-                                        <option value="2">2</option>
-                                        <option value="3">3</option>
-                                        <option value="4">4</option>
-                                        <option value="5">5</option>
-                                        <option value="6">6</option>
-                                        <option value="7">7</option>
-                                        <option value="8">8</option>
-                                        <option value="9">9</option>
-                                        <option value="10">10</option>
-                                    </select>
-                                </div>
-
-                                <div className="product-spacer"></div>
-
-                                <div className="added-to-cart">
-                                    <img src="images/icons/checkmark.png" />
-                                    Added
-                                </div>
-
-                                <button className="add-to-cart-button button-primary">
-                                    Add to Cart
-                                </button>
-                            </div>
-                        );
-                    })}
-                </div>
+                <ProductsGrid products={products} />
             </div>
         </>
     );
