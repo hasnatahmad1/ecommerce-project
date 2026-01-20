@@ -6,7 +6,7 @@ import { Header } from '../../components/Header'
 import { OrdersGrid } from './OrdersGrid';
 
 
-export function OrdersPage({ cart }) {
+export function OrdersPage({ cart, loadCart }) {
     const [orders, setOrders] = useState([]);
 
     useEffect(() => {
@@ -32,6 +32,7 @@ export function OrdersPage({ cart }) {
 
                 <OrdersGrid
                     orders={orders}
+                    loadCart={loadCart}
                 />
             </div>
         </>
