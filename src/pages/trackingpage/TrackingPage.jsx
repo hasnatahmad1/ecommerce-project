@@ -8,8 +8,6 @@ export function TrackingPage() {
         <>
             <title>Tracking</title>
 
-
-
             <Header />
 
             <div className="tracking-page">
