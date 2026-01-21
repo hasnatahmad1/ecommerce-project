@@ -31,6 +31,16 @@ export function CartItemDetails({ cartItem, loadCart }) {
         setQuantity(event.target.value);
     };
 
+    const updateKeyDown = (event) => {
+        if (event.key === 'Enter') {
+            toggleUpdateButton();
+        }
+        else if (event.key === 'Escape') {
+            setQuantity(cartItem.quantity);
+            setIsUpdated(false);
+        }
+    };
+
     return (
         <div className="cart-item-details">
             <div className="product-name">
@@ -44,6 +54,7 @@ export function CartItemDetails({ cartItem, loadCart }) {
                     Quantity: {isUpdated ? (
                         <input
                             type="text"
+                            onKeyDown={updateKeyDown}
                             value={quantity}
                             onChange={inputChange}
                             style={{ width: 50 + 'px' }}
