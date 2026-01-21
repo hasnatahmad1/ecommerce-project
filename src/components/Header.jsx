@@ -1,4 +1,5 @@
 import './Header.css';
+import { useNavigate } from 'react-router';
 import { NavLink } from 'react-router';
 
 export function Header({ cart }) {
@@ -7,6 +8,19 @@ export function Header({ cart }) {
     cart.forEach((cartItem) => {
         totalQuantity += cartItem.quantity;
     });
+
+    const navigateToHomePage = useNavigate();
+
+    let searchBarText = '';
+
+    const toggleSearchBarText = (event) => {
+        searchBarText = event.target.value;
+    };
+
+    const toggleSearchButton = () => {
+        // console.log(searchBarText);
+        navigateToHomePage(`/?search=${searchBarText}`);
+    };
     return (
         <>
             <div className="header">
@@ -20,9 +34,17 @@ export function Header({ cart }) {
                 </div>
 
                 <div className="middle-section">
-                    <input className="search-bar" type="text" placeholder="Search" />
+                    <input
+                        className="search-bar"
+                        type="text"
+                        onChange={toggleSearchBarText}
+                        placeholder="Search"
+                    />
 
-                    <button className="search-button">
+                    <button
+                        className="search-button"
+                        onClick={toggleSearchButton}
+                    >
                         <img className="search-icon" src="images/icons/search-icon.png" />
                     </button>
                 </div>

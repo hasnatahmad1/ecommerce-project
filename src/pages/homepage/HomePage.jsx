@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router';
 import { Header } from '../../components/Header'
 import './HomePage.css'
 import { ProductsGrid } from './ProductsGrid';
@@ -7,6 +8,9 @@ import { ProductsGrid } from './ProductsGrid';
 
 export function HomePage({ cart, loadCart }) {
     const [products, setProducts] = useState([]);
+    const [searchParams] = useSearchParams();
+    const search = searchParams.get('search');
+    const navigateToNotFoundPage = useNavigate();
 
 
 
@@ -45,12 +49,23 @@ export function HomePage({ cart, loadCart }) {
 
         //Using Async Await
         const getHomeData = async () => {
-            const response = await axios.get('/api/products');
-            setProducts(response.data);
+            if (search) {
+                const response = await axios.get(`/api/products/?search=${search}`)
+                if ((response.data).length === 0) {
+                    navigateToNotFoundPage('/product-not-found');
+                }
+                else {
+                    setProducts(response.data);
+                }
+            }
+            else {
+                const response = await axios.get('/api/products');
+                setProducts(response.data);
+            }
         };
 
         getHomeData();
-    }, []);
+    }, [search, navigateToNotFoundPage]);
 
     return (
         <>
